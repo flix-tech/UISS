@@ -21,7 +21,7 @@
     UISSBarMetricsValueConverter *converter = [[UISSBarMetricsValueConverter alloc] init];
 
     XCTAssertEqual([[converter convertValue:@"default"] integerValue], UIBarMetricsDefault);
-    XCTAssertEqual([[converter convertValue:@"landscapePhone"] integerValue], UIBarMetricsLandscapePhone);
+    XCTAssertEqual([[converter convertValue:@"landscapePhone"] integerValue], UIBarMetricsCompact);
 
     XCTAssertNil([converter convertValue:@"dummy"]);
 }

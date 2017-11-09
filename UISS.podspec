@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name     = 'UISS'
   s.version  = '1.1.2'
 
-  s.platform = :ios, '5.0'
+  s.platform = :ios, '9.0'
   
   s.license  = 'MIT'
   s.summary  = 'UIKit Style Sheets.'

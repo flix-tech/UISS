@@ -89,7 +89,7 @@
 - (void)testSimplePropertyWithContainment; {
     UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
     propertySetter.appearanceClass = [UIToolbar class];
-    propertySetter.containment = @[[UIPopoverController class]];
+    propertySetter.containment = @[[UINavigationController class]];
 
     UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
     tintColorProperty.name = @"tintColor";
@@ -97,13 +97,13 @@
 
     propertySetter.property = tintColorProperty;
 
-    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UIPopoverController class], nil] setTintColor:[UIColor whiteColor]];");
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UINavigationController class], nil] setTintColor:[UIColor whiteColor]];");
 }
 
 - (void)testSimplePropertyWithDeepContainment; {
     UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
     propertySetter.appearanceClass = [UIToolbar class];
-    propertySetter.containment = @[[UIPopoverController class], [UIView class]];
+    propertySetter.containment = @[[UINavigationController class], [UIView class]];
 
     UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
     tintColorProperty.name = @"tintColor";
@@ -111,7 +111,7 @@
 
     propertySetter.property = tintColorProperty;
 
-    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UIView class], [UIPopoverController class], nil] setTintColor:[UIColor whiteColor]];");
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UIView class], [UINavigationController class], nil] setTintColor:[UIColor whiteColor]];");
 }
 
 - (void)testPropertyWithAxisParameter; {

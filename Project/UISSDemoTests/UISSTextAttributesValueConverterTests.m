@@ -15,18 +15,18 @@
 
 - (void)testTextAttributesWithFont; {
     [self testValue:@{@"font" : @14.0f}
-       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0], UITextAttributeFont, nil]"]
+       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0], NSFontAttributeName, nil]"]
         assertBlock:^(NSDictionary *attributes) {
-            UIFont *font = attributes[UITextAttributeFont];
+            UIFont *font = attributes[NSFontAttributeName];
             XCTAssertEqualObjects(font, [UIFont systemFontOfSize:14]);
         }];
 }
 
 - (void)testTextAttributesWithTextColor; {
     [self testValue:@{@"textColor" : @"orange"}
-       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[UIColor orangeColor], UITextAttributeTextColor, nil]"]
+       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[UIColor orangeColor], NSForegroundColorAttributeName, nil]"]
         assertBlock:^(NSDictionary *attributes) {
-            UIColor *color = attributes[UITextAttributeTextColor];
+            UIColor *color = attributes[NSForegroundColorAttributeName];
             XCTAssertEqualObjects(color, [UIColor orangeColor]);
         }];
 }

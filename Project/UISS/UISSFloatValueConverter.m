@@ -33,7 +33,7 @@
 
 - (NSString *)generateCodeForFloatValue:(CGFloat)floatValue;
 {
-    NSString *format = [NSString stringWithFormat:@"%%.%df", self.precision];
+    NSString *format = [NSString stringWithFormat:@"%%.%luf", (unsigned long) self.precision];
     return [NSString stringWithFormat:format, floatValue];
 }
 

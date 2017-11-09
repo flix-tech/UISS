@@ -8,11 +8,11 @@
 
 - (void)setTextAttributes:(NSDictionary *)textAttributes;
 {
-    UIFont *font = [textAttributes objectForKey:UITextAttributeFont];
+    UIFont *font = [textAttributes objectForKey:NSFontAttributeName];
     if (font) {
         self.font = font;
     }
-    UIColor *textColor = [textAttributes objectForKey:UITextAttributeTextColor];
+    UIColor *textColor = [textAttributes objectForKey:NSForegroundColorAttributeName];
     if (textColor) {
         self.textColor = textColor;
     }

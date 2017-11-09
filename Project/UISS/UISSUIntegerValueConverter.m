@@ -24,7 +24,7 @@
 - (NSString *)generateCodeForValue:(id)value
 {
     if ([value respondsToSelector:@selector(unsignedIntegerValue)]) {
-        return [NSString stringWithFormat:@"%d", [value unsignedIntegerValue]];
+        return [NSString stringWithFormat:@"%lu", (unsigned long)[value unsignedIntegerValue]];
     }
     
     return nil;

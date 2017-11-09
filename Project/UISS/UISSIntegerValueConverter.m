@@ -25,7 +25,7 @@
 - (NSString *)generateCodeForValue:(id)value
 {
     if ([value respondsToSelector:@selector(integerValue)]) {
-        return [NSString stringWithFormat:@"%d", [value integerValue]];
+        return [NSString stringWithFormat:@"%ld", (long) [value integerValue]];
     }
     
     return nil;

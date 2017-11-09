@@ -59,11 +59,11 @@
 }
 
 - (void)testNavigationBarBackgroundImageForBarMetricsLandscapePhone; {
-    XCTAssertNotNil([[UINavigationBar appearance] backgroundImageForBarMetrics:UIBarMetricsLandscapePhone]);
+    XCTAssertNotNil([[UINavigationBar appearance] backgroundImageForBarMetrics:UIBarMetricsCompact]);
 }
 
 - (void)testTabBarItemTitleTextAttributes; {
-    UIFont *font = [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal][UITextAttributeFont];
+    UIFont *font = [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal][NSFontAttributeName];
     XCTAssertNotNil(font);
     if (font) {
         XCTAssertEqualObjects(font, [UIFont systemFontOfSize:24]);

@@ -81,7 +81,7 @@
 
 - (UIBarButtonItem *)createCloseBarButton {
     return [[UIBarButtonItem alloc] initWithTitle:@"Close"
-                                            style:UIBarButtonItemStyleBordered
+                                            style:UIBarButtonItemStylePlain
                                            target:self
                                            action:@selector(close)];
 }

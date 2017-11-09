@@ -50,7 +50,7 @@ NSString * const UISSInvalidAppearanceDictionaryErrorKey = @"UISSInvalidAppearan
 
 - (NSString *)localizedDescription;
 {
-    return [NSString stringWithFormat:@"%@. (%@ error %d.)", [self descriptionForCode:(UISSErrorCode) self.code], self.domain, self.code];
+    return [NSString stringWithFormat:@"%@. (%@ error %ld.)", [self descriptionForCode:(UISSErrorCode) self.code], self.domain, (long) self.code];
 }
 
 @end
