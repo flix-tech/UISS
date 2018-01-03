@@ -31,25 +31,6 @@
         }];
 }
 
-- (void)testTextAttributesWithTextShadowColor; {
-    [self testValue:@{@"textShadowColor" : @"gray"}
-       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor], UITextAttributeTextShadowColor, nil]"]
-        assertBlock:^(NSDictionary *attributes) {
-            UIColor *color = attributes[UITextAttributeTextShadowColor];
-            XCTAssertEqualObjects(color, [UIColor grayColor]);
-        }];
-}
-
-- (void)testTextAttributesWithTextShadowOffset; {
-    [self testValue:@{@"textShadowOffset" : @[@2.0f]}
-       expectedCode:[NSString stringWithFormat:@"[NSDictionary dictionaryWithObjectsAndKeys:[NSValue valueWithUIOffset:UIOffsetMake(2.0, 2.0)], UITextAttributeTextShadowOffset, nil]"]
-        assertBlock:^(NSDictionary *attributes) {
-            XCTAssertNotNil(attributes[UITextAttributeTextShadowOffset]);
-            UIOffset offset = [attributes[UITextAttributeTextShadowOffset] UIOffsetValue];
-             XCTAssertTrue(UIOffsetEqualToOffset(offset, UIOffsetMake(2, 2)));
-        }];
-}
-
 - (void)testValue:(id)value expectedCode:(NSString *)expectedCode assertBlock:(void (^)(NSDictionary *))assertBlock; {
     NSDictionary *attributes = [self.converter convertValue:value];
     XCTAssertNotNil(attributes);

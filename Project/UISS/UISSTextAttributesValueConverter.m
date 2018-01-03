@@ -11,8 +11,6 @@
 
 NSString *const FontKey = @"font";
 NSString *const TextColorKey = @"textColor";
-NSString *const TextShadowColorKey = @"textShadowColor";
-NSString *const TextShadowOffsetKey = @"textShadowOffset";
 
 NSString *const BaselineOffsetKey = @"baselineOffset";
 
@@ -80,18 +78,6 @@ NSString *const BaselineOffsetKey = @"baselineOffset";
                       withKey:NSForegroundColorAttributeName
                usingConverter:self.colorConverter];
 
-        [self convertProperty:TextShadowColorKey
-               fromDictionary:dictionary
-                 toDictionary:attributes
-                      withKey:UITextAttributeTextShadowColor
-               usingConverter:self.colorConverter];
-
-        [self convertProperty:TextShadowOffsetKey
-               fromDictionary:dictionary
-                 toDictionary:attributes
-                      withKey:UITextAttributeTextShadowOffset
-               usingConverter:self.offsetConverter];
-
         [self convertProperty:BaselineOffsetKey
                fromDictionary:dictionary
                  toDictionary:attributes
@@ -121,16 +107,6 @@ NSString *const BaselineOffsetKey = @"baselineOffset";
         id textColorValue = [dictionary objectForKey:TextColorKey];
         if (textColorValue) {
             [objectAndKeys appendFormat:@"%@, %@,", [self.colorConverter generateCodeForValue:textColorValue], @"NSForegroundColorAttributeName"];
-        }
-
-        id textShadowColor = [dictionary objectForKey:TextShadowColorKey];
-        if (textShadowColor) {
-            [objectAndKeys appendFormat:@"%@, %@,", [self.colorConverter generateCodeForValue:textShadowColor], @"UITextAttributeTextShadowColor"];
-        }
-
-        id textShadowOffset = [dictionary objectForKey:TextShadowOffsetKey];
-        if (textShadowOffset) {
-            [objectAndKeys appendFormat:@"[NSValue valueWithUIOffset:%@], %@,", [self.offsetConverter generateCodeForValue:textShadowOffset], @"UITextAttributeTextShadowOffset"];
         }
 
         id baselineOffset = [dictionary objectForKey:BaselineOffsetKey];
