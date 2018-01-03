@@ -142,8 +142,8 @@
 
 
     [self parserTestWithDictionary:containmentDictionary assertionsAfterInvoke:^(NSInvocation *invocation) {
-        UIColor *buttonColor = [[UIButton appearanceWhenContainedIn:[UINavigationController class],
-                                                                    nil] titleColorForState:UIControlStateHighlighted];
+        UIColor *buttonColor = [[UIButton appearanceWhenContainedInInstancesOfClasses:@[ [UINavigationController class] ]]
+                                titleColorForState:UIControlStateHighlighted];
         XCTAssertEqualObjects(buttonColor, [UIColor greenColor]);
     }];
 }
@@ -154,8 +154,8 @@
     dictionary = @{@"UINavigationController" : dictionary};
 
     [self parserTestWithDictionary:dictionary assertionsAfterInvoke:^(NSInvocation *invocation) {
-        UIColor *buttonColor = [[UIButton appearanceWhenContainedIn:[UIImageView class], [UINavigationController class],
-                                                                    nil] titleColorForState:UIControlStateHighlighted];
+        UIColor *buttonColor = [[UIButton appearanceWhenContainedInInstancesOfClasses:@[ [UIImageView class], [UINavigationController class] ]]
+                                titleColorForState:UIControlStateHighlighted];
         XCTAssertEqualObjects(buttonColor, [UIColor yellowColor]);
     }];
 }

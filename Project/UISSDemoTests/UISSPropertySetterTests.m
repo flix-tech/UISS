@@ -97,7 +97,7 @@
 
     propertySetter.property = tintColorProperty;
 
-    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UINavigationController class], nil] setTintColor:[UIColor whiteColor]];");
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedInInstancesOfClasses:@[[UINavigationController class], ]] setTintColor:[UIColor whiteColor]];");
 }
 
 - (void)testSimplePropertyWithDeepContainment; {
@@ -111,7 +111,7 @@
 
     propertySetter.property = tintColorProperty;
 
-    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedIn:[UIView class], [UINavigationController class], nil] setTintColor:[UIColor whiteColor]];");
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWhenContainedInInstancesOfClasses:@[[UIView class], [UINavigationController class], ]] setTintColor:[UIColor whiteColor]];");
 }
 
 - (void)testPropertyWithAxisParameter; {
