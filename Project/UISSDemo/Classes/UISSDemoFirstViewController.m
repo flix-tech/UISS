@@ -7,11 +7,13 @@
 @implementation UISSDemoFirstViewController
 
 - (IBAction)action:(id)sender {
-    [[[UIAlertView alloc] initWithTitle:@"Test"
-                               message:nil
-                              delegate:nil
-                     cancelButtonTitle:@"Close"
-                     otherButtonTitles:nil] show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Test"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
