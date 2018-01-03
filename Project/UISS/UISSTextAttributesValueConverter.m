@@ -19,6 +19,7 @@ NSString *const BaselineOffsetKey = @"baselineOffset";
 @property(nonatomic, strong) UISSFontValueConverter *fontConverter;
 @property(nonatomic, strong) UISSColorValueConverter *colorConverter;
 @property(nonatomic, strong) UISSOffsetValueConverter *offsetConverter;
+@property(nonatomic, strong) UISSFloatValueConverter *floatConverter;
 
 @end
 
@@ -31,6 +32,7 @@ NSString *const BaselineOffsetKey = @"baselineOffset";
         _fontConverter = [UISSFontValueConverter new];
         _colorConverter = [UISSColorValueConverter new];
         _offsetConverter = [UISSOffsetValueConverter new];
+        _floatConverter = [UISSFloatValueConverter new];
     }
     return self;
 }
@@ -111,7 +113,7 @@ NSString *const BaselineOffsetKey = @"baselineOffset";
 
         id baselineOffset = [dictionary objectForKey:BaselineOffsetKey];
         if (baselineOffset) {
-            [objectAndKeys appendFormat:@"%@, %@,", baselineOffset, @"UITextAttributeTextShadowColor"];
+            [objectAndKeys appendFormat:@"@%@, %@,", [self.floatConverter generateCodeForValue:baselineOffset], @"NSBaselineOffsetAttributeName"];
         }
 
         if (objectAndKeys.length) {

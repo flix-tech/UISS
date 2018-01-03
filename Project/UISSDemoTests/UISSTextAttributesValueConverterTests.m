@@ -31,6 +31,15 @@
         }];
 }
 
+- (void)testTextAttributesWithBaselineOffset {
+    [self testValue:@{@"baselineOffset" : @10}
+       expectedCode:@"[NSDictionary dictionaryWithObjectsAndKeys:@10.0, NSBaselineOffsetAttributeName, nil]"
+        assertBlock:^(NSDictionary *attributes) {
+            NSNumber *offset = attributes[NSBaselineOffsetAttributeName];
+            XCTAssertEqualObjects(offset, @10);
+        }];
+}
+
 - (void)testValue:(id)value expectedCode:(NSString *)expectedCode assertBlock:(void (^)(NSDictionary *))assertBlock; {
     NSDictionary *attributes = [self.converter convertValue:value];
     XCTAssertNotNil(attributes);
