@@ -2,8 +2,10 @@
 // Copyright (c) 2013 Robert Wijas. All rights reserved.
 //
 
+#import "UISSAppearance.h"
 #import "UISSConfig.h"
 #import "UISSStyle.h"
+#import "UIView+UISS.h"
 
 extern NSString *const UISSWillApplyStyleNotification;
 extern NSString *const UISSDidApplyStyleNotification;

@@ -4,11 +4,14 @@
 
 #import "UISSParser.h"
 
+#import "UISSAppearance.h"
 #import "UISSConfig.h"
 #import "UISSDictionaryPreprocessor.h"
-#import "UISSPropertySetter.h"
 #import "UISSError.h"
 #import "UISSParserContext.h"
+#import "UISSPropertySetter.h"
+
+static NSString *const AppearanceIdentifierDelimiter = @"#";
 
 @implementation UISSParser
 
@@ -26,8 +29,12 @@
 - (id)propertySetterForKey:(NSString *)key withValue:(id)value context:(UISSParserContext *)context {
     UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
 
-    propertySetter.appearanceClass = context.appearanceStack.lastObject;
-    propertySetter.containment = [context.appearanceStack subarrayWithRange:NSMakeRange(0, context.appearanceStack.count - 1)];
+    __auto_type container = context.containersStack.lastObject;
+
+    propertySetter.appearanceClass = container.containerClass;
+    propertySetter.identifier = container.identifier;
+    propertySetter.usesUISSAppearance = context.UISSAppearanceEnabled;
+    propertySetter.containment = [context.containersStack subarrayWithRange:NSMakeRange(0, context.containersStack.count - 1)];
 
     NSArray *keyParts = [key componentsSeparatedByString:@":"];
 
@@ -53,20 +60,21 @@
     return propertySetter;
 }
 
-- (void)processClass:(Class)class object:(id)object context:(UISSParserContext *)context; {
-    if ([class conformsToProtocol:@protocol(UIAppearance)] || [class conformsToProtocol:@protocol(UIAppearanceContainer)]) {
-        Class currentContainer = context.appearanceStack.lastObject;
+- (void)processClass:(Class)containerClass withIdentifier:(NSString *)identifier object:(id)object context:(UISSParserContext *)context;
+{
+    if ([containerClass conformsToProtocol:@protocol(UIAppearance)] || [containerClass conformsToProtocol:@protocol(UIAppearanceContainer)]) {
+        Class currentContainer = context.containersStack.lastObject.containerClass;
 
         if (currentContainer == nil || [currentContainer conformsToProtocol:@protocol(UIAppearanceContainer)]) {
-            UISS_LOG(@"component: %@", NSStringFromClass(class));
+            UISS_LOG(@"component: %@", NSStringFromClass(containerClass));
 
             if ([object isKindOfClass:[NSDictionary class]]) {
-                [context.appearanceStack addObject:class];
+                [context pushContainer:containerClass withIdentifier:identifier];
                 [self parseDictionary:object context:context];
-                [context.appearanceStack removeLastObject];
+                [context popContainer];
             } else {
                 [context addErrorWithCode:UISSInvalidAppearanceDictionaryError
-                                   object:[NSDictionary dictionaryWithObject:object forKey:NSStringFromClass(class)]
+                                   object:[NSDictionary dictionaryWithObject:object forKey:NSStringFromClass(containerClass)]
                                       key:UISSInvalidAppearanceDictionaryErrorKey];
             }
         } else {
@@ -76,7 +84,7 @@
         }
     } else {
         [context addErrorWithCode:UISSInvalidAppearanceClassError
-                           object:NSStringFromClass(class)
+                           object:NSStringFromClass(containerClass)
                               key:UISSInvalidClassNameErrorKey];
     }
 }
@@ -86,11 +94,11 @@
         // first letter capitalized so I guess this supposed to be a class
         [context addErrorWithCode:UISSUnknownClassError object:key key:UISSInvalidClassNameErrorKey];
     } else {
-        Class currentClass = context.appearanceStack.lastObject;
+        Class currentClass = context.containersStack.lastObject.containerClass;
 
         if (currentClass == nil) {
             [context addErrorWithCode:UISSUnknownClassError object:key key:UISSInvalidClassNameErrorKey];
-        } else if ([context.appearanceStack.lastObject conformsToProtocol:@protocol(UIAppearance)] == NO) {
+        } else if (![currentClass conformsToProtocol:@protocol(UIAppearance)]) {
             [context addErrorWithCode:UISSInvalidAppearanceClassError object:NSStringFromClass(currentClass)
                                   key:UISSInvalidClassNameErrorKey];
         } else {
@@ -105,14 +113,23 @@
         [context.groupsStack addObject:[key substringFromIndex:[self.groupPrefix length]]];
         [self parseDictionary:object context:context];
         [context.groupsStack removeLastObject];
-    } else {
-        Class class = NSClassFromString(key);
+        return;
+    }
 
-        if (class) {
-            [self processClass:class object:object context:context];
-        } else {
-            [self processPropertyWithKey:key value:object context:context];
-        }
+    NSArray *components = [key componentsSeparatedByString:AppearanceIdentifierDelimiter];
+
+    if (components.count > 1) {
+        Class class = NSClassFromString(components[0]);
+        [self processClass:class withIdentifier:components[1] object:object context:context];
+        return;
+    }
+
+    Class class = NSClassFromString(key);
+
+    if (class) {
+        [self processClass:class withIdentifier:nil object:object context:context];
+    } else {
+        [self processPropertyWithKey:key value:object context:context];
     }
 }
 

@@ -3,8 +3,10 @@
 //
 
 #import <objc/runtime.h>
-#import "UISSPropertySetter.h"
+
 #import "NSString+UISS.h"
+#import "UISSAppearance.h"
+#import "UISSPropertySetter.h"
 
 @interface UISSPropertySetter ()
 
@@ -143,19 +145,57 @@
 #pragma mark - Code generation
 
 - (NSString *)appearanceCode {
+
+    if (_usesUISSAppearance) {
+        return [self UISSAppearanceCode];
+    }
+
+    return [self systemAppearanceCode];
+}
+
+- (NSString *)systemAppearanceCode
+{
     if (self.containment.count) {
         NSMutableString *containmentCode = [NSMutableString stringWithString:@"@["];
 
-        for (Class <UIAppearanceContainer> appearanceContainer in self.containment.reverseObjectEnumerator) {
-            [containmentCode appendFormat:@"[%@ class], ", NSStringFromClass(appearanceContainer)];
+        for (UISSAppearanceContainer *container in self.containment.reverseObjectEnumerator) {
+            [containmentCode appendFormat:@"[%@ class], ", NSStringFromClass(container.containerClass)];
         }
         [containmentCode appendString:@"]"];
 
         return [NSString stringWithFormat:@"[%@ appearanceWhenContainedInInstancesOfClasses:%@]",
                                           NSStringFromClass(self.appearanceClass), containmentCode];
-    } else {
-        return [NSString stringWithFormat:@"[%@ appearance]", NSStringFromClass(self.appearanceClass)];
     }
+
+    return [NSString stringWithFormat:@"[%@ appearance]", NSStringFromClass(self.appearanceClass)];
+}
+
+- (NSString *)UISSAppearanceCode
+{
+    NSMutableString *result = [NSMutableString new];
+
+    [result appendString:@"["];
+    [result appendString:NSStringFromClass(_appearanceClass)];
+    [result appendFormat:@" appearanceWithUISSIdentifier:@\"%@\"", _identifier];
+
+    if (_containment.count) {
+        [result appendString:@" inContainers:@["];
+
+        NSMutableArray *containerStrings = [NSMutableArray new];
+
+        for (UISSAppearanceContainer *container in _containment.reverseObjectEnumerator) {
+            [containerStrings addObject:[NSString stringWithFormat:@"[UISSAppearanceContainer containerWithClass:%@.class identifier:%@]",
+                                                  NSStringFromClass(container.containerClass),
+                                                  container.identifier ? [NSString stringWithFormat:@"@\"%@\"", container.identifier] : @"nil"]];
+        }
+
+        [result appendString:[containerStrings componentsJoinedByString:@", "]];
+        [result appendString:@"]"];
+    }
+
+    [result appendString:@"]"];
+
+    return result;
 }
 
 - (NSString *)generatedCode {
@@ -234,11 +274,16 @@
 }
 
 - (id)target {
+    NSCParameterAssert(_usesUISSAppearance || !_identifier);
+    if (self.usesUISSAppearance) {
+        return [self.appearanceClass appearanceWithUISSIdentifier:_identifier inContainers:self.containment.reverseObjectEnumerator.allObjects];
+    }
+
     if (self.containment.count == 0) {
         return [self.appearanceClass appearance];
     }
 
-    return [self.appearanceClass appearanceWhenContainedInInstancesOfClasses:self.containment.reverseObjectEnumerator.allObjects];
+    return [self.appearanceClass appearanceWhenContainedInInstancesOfClasses:[self.containment.reverseObjectEnumerator.allObjects valueForKeyPath:@"containerClass"]];
 }
 
 - (NSString *)description {

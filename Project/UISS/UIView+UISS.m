@@ -2,8 +2,9 @@
 // Copyright (c) 2013 Robert Wijas. All rights reserved.
 //
 
-#import "UIView+UISS.h"
 #import <QuartzCore/QuartzCore.h>
+
+#import "UIView+UISS.h"
 
 @implementation UIView (UISS)
 

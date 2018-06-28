@@ -6,10 +6,14 @@
 #import "UISSProperty.h"
 #import "UISSAxisParameter.h"
 
+@class UISSAppearanceContainer;
+
 @interface UISSPropertySetter : NSObject
 
 @property(nonatomic, strong) Class appearanceClass;
-@property(nonatomic, copy) NSArray *containment; // array of Class<UIAppearanceContainer>
+@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic) BOOL usesUISSAppearance;
+@property (nonatomic, copy) NSArray<UISSAppearanceContainer *> *containment; // array of Class<UIAppearanceContainer>
 
 @property(nonatomic, strong) UISSProperty *property;
 @property(nonatomic, copy) NSArray *axisParameters;

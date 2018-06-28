@@ -5,6 +5,13 @@
 #import "UISS.h"
 #import <XCTest/XCTest.h>
 
+@interface TestLabel : UILabel
+@end
+
+@implementation TestLabel
+@end
+
+
 @interface ExampleJSONTests : XCTestCase
 
 @property(nonatomic, strong) UISS *uiss;
@@ -68,6 +75,77 @@
     if (font) {
         XCTAssertEqualObjects(font, [UIFont systemFontOfSize:24]);
     }
+}
+
+- (void)testToolbarWithIdentifierOnMovingToWindow;
+{
+    UIToolbar *toolbar = [UIToolbar new];
+    toolbar.UISSIdentifier = @"magenta";
+
+    UIView *simpleView = [UIView new];
+    [toolbar addSubview:simpleView];
+
+    UILabel *label = [UILabel new];
+    [simpleView addSubview:label];
+
+    UILabel *redLabel = [UILabel new];
+    redLabel.UISSIdentifier = @"red";
+    [toolbar addSubview:redLabel];
+
+    TestLabel *magentaLabel = [TestLabel new];
+    magentaLabel.UISSIdentifier = @"magenta";
+    [toolbar addSubview:magentaLabel];
+
+    TestLabel *nestedLabel = [TestLabel new];
+    nestedLabel.UISSIdentifier = @"overridden";
+    [toolbar addSubview:nestedLabel];
+
+    UIWindow *window = [UIWindow new];
+
+    [window addSubview:toolbar];
+
+    XCTAssertEqualObjects(toolbar.barTintColor, UIColor.magentaColor);
+    XCTAssertEqualObjects(toolbar.tintColor, UIColor.whiteColor);
+
+    XCTAssertEqualObjects(label.textColor, UIColor.cyanColor);
+    XCTAssertEqualObjects(redLabel.textColor, UIColor.redColor);
+    XCTAssertEqualObjects(magentaLabel.textColor, UIColor.magentaColor);
+    XCTAssertEqualObjects(nestedLabel.textColor, UIColor.purpleColor);
+}
+
+- (void)testToolbarWithIdentifierOnAddingDescendants;
+{
+    UIToolbar *toolbar = [UIToolbar new];
+    toolbar.UISSIdentifier = @"magenta";
+
+    UIWindow *window = [UIWindow new];
+    [window addSubview:toolbar];
+
+    UIView *simpleView = [UIView new];
+    [toolbar addSubview:simpleView];
+
+    UILabel *label = [UILabel new];
+    [simpleView addSubview:label];
+
+    UILabel *redLabel = [UILabel new];
+    redLabel.UISSIdentifier = @"red";
+    [toolbar addSubview:redLabel];
+
+    TestLabel *magentaLabel = [TestLabel new];
+    magentaLabel.UISSIdentifier = @"magenta";
+    [toolbar addSubview:magentaLabel];
+
+    TestLabel *nestedLabel = [TestLabel new];
+    nestedLabel.UISSIdentifier = @"overridden";
+    [toolbar addSubview:nestedLabel];
+
+    XCTAssertEqualObjects(toolbar.barTintColor, UIColor.magentaColor);
+    XCTAssertEqualObjects(toolbar.tintColor, UIColor.whiteColor);
+
+    XCTAssertEqualObjects(label.textColor, UIColor.cyanColor);
+    XCTAssertEqualObjects(redLabel.textColor, UIColor.redColor);
+    XCTAssertEqualObjects(magentaLabel.textColor, UIColor.magentaColor);
+    XCTAssertEqualObjects(nestedLabel.textColor, UIColor.purpleColor);
 }
 
 @end

@@ -1,3 +1,5 @@
+[![CI Status](https://img.shields.io/travis/flix-tech/UISS.svg?style=flat)](https://travis-ci.org/flix-tech/UISS)
+
 [Subscribe to UISS mailing list.](http://eepurl.com/bnNaq1)
 
 # What is UISS?
@@ -379,6 +381,54 @@ With UISS you can create parts of style that apply only to a specified UI Idiom.
 	}
 }
 ```
+
+## Identifiers
+
+Identifiers are similar to CSS ids. They allow to specify unique styles superseding all other UIAppearance styles.
+
+Defining style for object with identifier:
+```json
+{
+	"UIToolbar#magenta": {
+	    "barTintColor": "magenta"
+	}
+}
+```
+```objc
+[[UIToolbar appearanceWithUISSIdentifier:@"magenta"] setBarTintColor:[UIColor magentaColor]];
+
+```
+
+Defining style for object inside a container with identifier:
+```json
+{
+	"UIToolbar#magenta": {
+        "UILabel":{
+            "textAttributes":{
+                "textColor":"magenta"
+            }
+        }
+	}
+}
+```
+```objc
+[[UILabel appearanceWithUISSIdentifier:nil inContainers:@[[UISSAppearanceContainer containerWithClass:[UIToolBar class] identifier:@"magenta"]]] setTextAttributes:@{
+	NSForegroundColorAttributeName : [UIColor magentaColor]
+}];
+
+```
+
+Identifiers for specific elements can be set in code:
+```objc
+{
+	UIToolbar *toolbar = [UIToolbar new];
+	toolbar.UISSIdentifier = @"magenta";
+}, 
+
+as well as in Interface Builder.
+
+Note: identifiers are currently supported only for UIView subclasses.
+
 
 ## Comments
 

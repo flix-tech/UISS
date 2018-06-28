@@ -3,6 +3,8 @@
 //
 
 #import <XCTest/XCTest.h>
+
+#import "UISSAppearance.h"
 #import "UISSPropertySetter.h"
 
 @interface UISSPropertySetterTests : XCTestCase
@@ -86,10 +88,64 @@
     XCTAssertNotNil(invocation);
 }
 
+- (void)testSimplePropertyWithIdentifier;
+{
+    UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
+    propertySetter.appearanceClass = [UIToolbar class];
+    propertySetter.identifier = @"special";
+    propertySetter.usesUISSAppearance = YES;
+
+    UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
+    tintColorProperty.name = @"tintColor";
+    tintColorProperty.value = @"white";
+
+    propertySetter.property = tintColorProperty;
+
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UIToolbar appearanceWithUISSIdentifier:@\"special\"] setTintColor:[UIColor whiteColor]];");
+
+    NSInvocation *invocation = propertySetter.invocation;
+    XCTAssertNotNil(invocation);
+    XCTAssertEqual(invocation.target, [UIToolbar appearanceWithUISSIdentifier:propertySetter.identifier]);
+}
+
+- (void)testSimplePropertyWithIdentifierInDeepContainment;
+{
+    UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
+    propertySetter.appearanceClass = [UILabel class];
+    propertySetter.identifier = @"special";
+    propertySetter.usesUISSAppearance = YES;
+    propertySetter.containment = @[
+        [UISSAppearanceContainer containerWithClass:UIToolbar.class
+                                         identifier:nil],
+        [UISSAppearanceContainer containerWithClass:UIButton.class
+                                         identifier:@"btn"],
+    ];
+
+    UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
+    tintColorProperty.name = @"tintColor";
+    tintColorProperty.value = @"white";
+
+    propertySetter.property = tintColorProperty;
+
+    XCTAssertEqualObjects(propertySetter.generatedCode, @"[[UILabel appearanceWithUISSIdentifier:@\"special\" inContainers:@[[UISSAppearanceContainer containerWithClass:UIButton.class identifier:@\"btn\"], [UISSAppearanceContainer containerWithClass:UIToolbar.class identifier:nil]]] setTintColor:[UIColor whiteColor]];");
+
+    NSInvocation *invocation = propertySetter.invocation;
+    XCTAssertNotNil(invocation);
+
+    id expectedTarget = [UILabel appearanceWithUISSIdentifier:propertySetter.identifier
+                                                 inContainers:@[
+                                                     [UISSAppearanceContainer containerWithClass:UIButton.class
+                                                                                      identifier:@"btn"],
+                                                     [UISSAppearanceContainer containerWithClass:UIToolbar.class
+                                                                                      identifier:nil],
+                                                 ]];
+    XCTAssertEqual(invocation.target, expectedTarget);
+}
+
 - (void)testSimplePropertyWithContainment; {
     UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
     propertySetter.appearanceClass = [UIToolbar class];
-    propertySetter.containment = @[[UINavigationController class]];
+    propertySetter.containment = @[ [UISSAppearanceContainer containerWithClass:[UINavigationController class] identifier:nil] ];
 
     UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
     tintColorProperty.name = @"tintColor";
@@ -103,7 +159,12 @@
 - (void)testSimplePropertyWithDeepContainment; {
     UISSPropertySetter *propertySetter = [[UISSPropertySetter alloc] init];
     propertySetter.appearanceClass = [UIToolbar class];
-    propertySetter.containment = @[[UINavigationController class], [UIView class]];
+    propertySetter.containment = @[
+        [UISSAppearanceContainer containerWithClass:[UINavigationController class]
+                                         identifier:nil],
+        [UISSAppearanceContainer containerWithClass:[UIView class]
+                                         identifier:nil]
+    ];
 
     UISSProperty *tintColorProperty = [[UISSProperty alloc] init];
     tintColorProperty.name = @"tintColor";
