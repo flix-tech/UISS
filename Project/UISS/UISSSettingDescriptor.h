@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, UISSSettingDescriptorEditorType) {
 @property(nonatomic) UISSSettingDescriptorEditorType editorType;
 @property(nonatomic) UIKeyboardType keyboardType;
 
-@property(nonatomic, copy) id (^valueProvider)();
+@property(nonatomic, copy) id (^valueProvider)(void);
 @property(nonatomic, copy) void (^valueChangeHandler)(id);
 
 @property(nonatomic, readonly) NSString *stringValue;
