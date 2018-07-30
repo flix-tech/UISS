@@ -1,0 +1,10 @@
+osx_image: xcode9.4
+language: objective-c
+
+branches:
+  only:
+    - master
+
+script:
+- set -o pipefail && travis_retry xcodebuild test -project Project/UISS.xcodeproj -scheme UISSDemo -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.4'  ONLY_ACTIVE_ARCH=NO | xcpretty
+- pod lib lint

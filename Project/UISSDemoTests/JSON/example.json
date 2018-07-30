@@ -19,5 +19,34 @@
     "UITabBarItem": {
         "titlePositionAdjustment": [10, 10],
         "titleTextAttributes:normal": {"font":24}
+    },
+    "UILabel#red":{
+        "textAttributes":{
+            "textColor":"red"
+        }
+    },
+    "UILabel#magenta":{
+        "textAttributes":{
+            "textColor":"magenta"
+        }
+    },
+    "UILabel#overridden":{
+        "textAttributes":{
+            "textColor":"yellow"
+        }
+    },
+    "UIToolbar#magenta": {
+        "barTintColor": "magenta",
+        "tintColor": "white",
+        "UILabel":{
+            "textAttributes":{
+                "textColor":"cyan"
+            }
+        },
+        "UILabel#overridden":{
+            "textAttributes":{
+                "textColor":"purple"
+            }
+        }
     }
 }

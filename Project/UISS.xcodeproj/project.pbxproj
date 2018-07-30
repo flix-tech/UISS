@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0123F2F720EFAB6A00BD4CE7 /* UISSAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0123F2F620EFAB4D00BD4CE7 /* UISSAppearance.m */; };
+		0132F12820E4DC790064B9DB /* UISSAppearanceProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0132F12620E4DC780064B9DB /* UISSAppearanceProxy.h */; };
+		0132F12920E4DC790064B9DB /* UISSAppearanceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0132F12720E4DC780064B9DB /* UISSAppearanceProxy.m */; };
 		01CA98E31BF389EE00ED8794 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B438E1143F674200F87518 /* CoreGraphics.framework */; };
 		01CA98E41BF38D0600ED8794 /* UISSRectValueConverterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E12DA0C6155AB9940066CCC3 /* UISSRectValueConverterTests.m */; };
 		01CA98E51BF38D3F00ED8794 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B438E1143F674200F87518 /* CoreGraphics.framework */; };
@@ -200,6 +203,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0123F2F620EFAB4D00BD4CE7 /* UISSAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UISSAppearance.m; sourceTree = "<group>"; };
+		0132F12620E4DC780064B9DB /* UISSAppearanceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISSAppearanceProxy.h; sourceTree = "<group>"; };
+		0132F12720E4DC780064B9DB /* UISSAppearanceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISSAppearanceProxy.m; sourceTree = "<group>"; };
+		0132F12A20E4E2760064B9DB /* UISSAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UISSAppearance.h; sourceTree = "<group>"; };
 		C8D2B021E9CB72A0ADBADDEE /* UISSSettingDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISSSettingDescriptor.h; sourceTree = "<group>"; };
 		C8D2B2AB02BB0DD97B7675C3 /* UISSImageResizingModeValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISSImageResizingModeValueConverter.m; sourceTree = "<group>"; };
 		C8D2B38720F19D0CC0E45FFB /* UIFont+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+UISS.m"; sourceTree = "<group>"; };
@@ -299,7 +306,7 @@
 		E146982E15584700000F311F /* ExampleJSONTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleJSONTests.m; sourceTree = "<group>"; };
 		E146983915584831000F311F /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		E146983E155905FE000F311F /* UISSColorValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISSColorValueConverter.h; sourceTree = "<group>"; };
-		E146983F155905FE000F311F /* UISSColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UISSColorValueConverter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E146983F155905FE000F311F /* UISSColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UISSColorValueConverter.m; sourceTree = "<group>"; };
 		E146984215590709000F311F /* UISSFontValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISSFontValueConverter.h; sourceTree = "<group>"; };
 		E146984315590709000F311F /* UISSFontValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UISSFontValueConverter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E146984A15598AAB000F311F /* UISSColorValueConverterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UISSColorValueConverterTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -740,6 +747,10 @@
 		E1A7739415668F6C000406CC /* UIKit Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0132F12A20E4E2760064B9DB /* UISSAppearance.h */,
+				0123F2F620EFAB4D00BD4CE7 /* UISSAppearance.m */,
+				0132F12620E4DC780064B9DB /* UISSAppearanceProxy.h */,
+				0132F12720E4DC780064B9DB /* UISSAppearanceProxy.m */,
 				E1A7739615668F80000406CC /* UILabel+UISS.h */,
 				E1A7739715668F80000406CC /* UILabel+UISS.m */,
 				E1F35EAF1593A3F20074389E /* UIView+UISS.h */,
@@ -955,6 +966,7 @@
 				E129E5DE1563DE5000E93185 /* UISSBarMetricsValueConverter.h in Headers */,
 				E129E5E21563DE7B00E93185 /* UISSControlStateValueConverter.h in Headers */,
 				E129E5E61563DEB700E93185 /* UISSSegmentedControlSegmentValueConverter.h in Headers */,
+				0132F12820E4DC790064B9DB /* UISSAppearanceProxy.h in Headers */,
 				E129E5EE1563F54800E93185 /* UISSAbstractEnumValueConverter.h in Headers */,
 				E1A7739815668F80000406CC /* UILabel+UISS.h in Headers */,
 				E1A775B21566E8D6000406CC /* UISSToolbarPositionValueConverter.h in Headers */,
@@ -1155,7 +1167,9 @@
 				E1A7739915668F80000406CC /* UILabel+UISS.m in Sources */,
 				E1A775B31566E8D6000406CC /* UISSToolbarPositionValueConverter.m in Sources */,
 				E1A775BD1567945D000406CC /* UISSVariablesPreprocessor.m in Sources */,
+				0123F2F720EFAB6A00BD4CE7 /* UISSAppearance.m in Sources */,
 				E116C4F3156E7E4200CA1BCB /* UISSSearchBarIconValueConverter.m in Sources */,
+				0132F12920E4DC790064B9DB /* UISSAppearanceProxy.m in Sources */,
 				E15B384C1572579F005BFF73 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
 				E116AF23157AA24E00BFB3D1 /* UISSPropertySetter.m in Sources */,
 				E116AF28157ABBA900BFB3D1 /* UISSArgument.m in Sources */,
